@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: rgb(4, 77, 77);
+    margin: 0;
+    padding: 0;
+    font-family: "Quicksand", sans-serif;
+    padding-top: 120px; /* Adjusted padding to accommodate the fixed header */
+    background-color: #f8fcfc; /* Light background for the body */
+}
+
+.head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000; /* Increased z-index to ensure it stays on top */
+    border-bottom: 2px solid rgb(228, 249, 249);
+    padding: 10px 0; /* Add some vertical padding */
+}
+
+main {
+    margin-top: 0; /* Remove margin-top as padding-top on body handles it */
+}
+
+header {
+    margin: 0 2vw; /* Adjusted margin to be more consistent */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    background-color: #baecf7;
+    padding: 15px 30px; /* Reduced padding for a tighter header */
+    border-radius: 25px;
+    font-weight: bolder;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.icon {
+    width: 35px; 
+    height: auto;
+    padding-top: 2px;
+}
+
+.info{
+    display: flex;
+    font-weight:bolder;
+    gap: 12px;
+    font-size: larger;
+}
+
+.name{
+    
+    align-self: center;
+}
+
+nav {
+    display: flex;
+    gap: 3vw; /* Reduced gap for closer nav items */
+    align-items: center;
+}
+
+nav a {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: rgb(13, 13, 169);
+    transition: transform 0.12s ease-in-out;
+    font-size: 1.1em;
+}
+
+.start {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bolder;
+    background-color: #007bff; /* A standard blue */
+    color: rgb(255, 255, 255);
+    transition: transform 0.12s ease-in-out;
+    border-radius: 25px;
+    border: solid #007bff;
+    padding: 10px 20px; /* More padding for button */
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.start:hover {
+    transition-delay: 0.1s;
+    transform: scale(1.05); /* Slightly less aggressive scale */
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3;
+}
+
+nav a:hover {
+    transition-delay: 0.1s;
+    transform: scale(1.05); /* Slightly less aggressive scale */
+    color: #0056b3; /* Darker blue on hover */
+}
+
+/* Hero Section */
+.hero-section {
+    margin: 3vw;
+    display: flex; /* Changed to flexbox for better control */
+    align-items: center;
+    justify-content: space-between; /* Space out content and image */
+    gap: 40px; /* Gap between text and image */
+    background-color: #e9f6fa;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.hero-content {
+    flex: 2; /* Takes more space */
+    max-width: 60%;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    color: #0056b3;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.hero-image {
+    flex: 1; /* Takes less space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cloud_box {
+    width: 100%;
+    max-width: 450px; /* Max width for the image */
+    height: auto;
+}
+
+/* Features Section */
+.features-section {
+    margin: 5vw 3vw;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5em;
+    color: #0056b3;
+    margin-bottom: 50px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    text-align: left;
+    transition: transform 0.2s ease-in-out;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item h3 {
+    font-size: 1.5em;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.feature-item p {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+/* Call to Action Section (formerly Storage_vault) */
+.Storage_vault.call-to-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5vw 3vw;
+    background-color: #baecf7;
+    padding: 60px;
+    border-radius: 20px;
+    text-align: center;
+    row-gap: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.Storage_vault.call-to-action h2 {
+    font-size: 2.8em;
+    color: #0056b3;
+    margin-bottom: 20px;
+}
+
+.Storage_vault.call-to-action p {
+    font-size: 1.4em;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 30px;
+}
+
+/* Footer */
+footer {
+    background-color: #003366; /* Dark blue footer */
+    color: #ffffff;
+    padding: 40px 3vw;
+    margin-top: 50px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h3 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: #a7d9ff; /* Lighter blue for headings */
+}
+
+.footer-section p, .footer-section ul {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85em;
+    color: #a0a0a0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-section {
+        flex-direction: column;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1.1em;
+    }
+
+    .cloud_box {
+        max-width: 300px;
+    }
+
+    .features-section h2 {
+        font-size: 2em;
+    }
+
+    .Storage_vault.call-to-action {
+        padding: 40px;
+    }
+
+    .Storage_vault.call-to-action h2 {
+        font-size: 2em;
+    }
+
+    .Storage_vault.call-to-action p {
+        font-size: 1.1em;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 100px;
+    }
+
+    .head {
+        padding: 5px 0;
+    }
+
+    header {
+        padding: 10px 15px;
+        border-radius: 15px;
+    }
+
+    .icon {
+        width: 30px;
+    }
+
+    nav a {
+        font-size: 1em;
+    }
+
+    .start {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .hero-section {
+        margin: 5vw 2vw;
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+
+    .features-section {
+        margin: 8vw 2vw;
+    }
+
+    .features-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+
+    .feature-item {
+        padding: 20px;
+    }
+
+    .feature-item h3 {
+        font-size: 1.3em;
+    }
+
+    .Storage_vault.call-to-action {
+        margin: 8vw 2vw;
+        padding: 30px;
+    }
+
+    .Storage_vault.call-to-action h2 {
+        font-size: 1.8em;
+    }
+
+    .Storage_vault.call-to-action p {
+        font-size: 1em;
+    }
+}
