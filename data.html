@@ -6,19 +6,42 @@
     <title>Unicloud - Dashboard</title>
     <link rel="stylesheet" href="style_main.css"> <link rel="stylesheet" href="style_data.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hamburger = document.querySelector('.hamburger');
+        const nav = document.querySelector('.details nav');
+
+        hamburger.addEventListener('click', function () {
+            nav.classList.toggle('active');
+        });
+
+        const navItems = nav.querySelectorAll('a, button');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    });
+</script>
+
+
 <body>
 
     <div class="head">
         <header>
             <div class="info">
-                <img src="public/icon.svg" alt="icon.svg" class="icon">
+                <img src="../public/icon.svg" alt="icon.svg" class="icon">
                 <div class="name">Unicloud</div>
             </div>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="#">Connect</a>
-                <button class="start" onclick="location.href='login.html'">Logout</button>
-            </nav>
+            <div class="details">
+                <nav>
+                    <a href="index.html">Home</a>
+                    <a href="#">Connect</a>
+                    <button class="start" onclick="location.href='login.html'">Logout</button>
+                </nav>
+                <button class="hamburger">☰</button>
+            </div>
+            
         </header>
     </div>
 
@@ -45,13 +68,6 @@
                         <i class="fab fa-dropbox icon-lg dropbox-color"></i>
                         <h3>Dropbox</h3>
                         <p>Storage Used: 50 GB / 200 GB</p>
-                        <p class="status-ok">Status: OK</p>
-                        <button class="btn-manage">Manage</button>
-                    </div>
-                    <div class="account-item">
-                        <i class="fab fa-microsoft icon-lg onedrive-color"></i>
-                        <h3>OneDrive</h3>
-                        <p>Storage Used: 2 GB / 5 GB</p>
                         <p class="status-ok">Status: OK</p>
                         <button class="btn-manage">Manage</button>
                     </div>

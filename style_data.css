@@ -3,7 +3,7 @@ body {
 }
 
 .data-main {
-    padding-top: 5vh; 
+    /* padding-top: 5vh;  */
     margin: 3vw;
 }
 
@@ -198,7 +198,6 @@ body {
 /* Responsive Adjustments for data.html */
 @media (max-width: 768px) {
     .data-main {
-        padding-top: 100px;
         margin: 5vw 2vw;
     }
 
@@ -227,7 +226,6 @@ body {
 
 @media (max-width: 480px) {
     .data-main {
-        padding-top: 80px;
         margin: 8vw 2vw;
     }
 
