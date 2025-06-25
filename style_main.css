@@ -294,28 +294,33 @@ footer {
         justify-content: space-between;
         padding: 15px 20px;
         position: relative;
+        transition:right 4s ease-in-out;
     }
 
     nav {
-        display: none;
-        
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: fixed;
+    top: 80px;
+    right: -300px; 
+    transition: right 0.4s cubic-bezier(0.77, 0.03, 0.58, 1), opacity 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: solid grey 1px;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.75);
+}
 
-    nav.active {
-        display: flex;
-        border: solid grey 1px;
-        border-radius: 25px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        position: fixed;
-        z-index: 2000;
-        top: 80px;
-        right: 10px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
+nav.active {
+    right: 10px;
+    opacity: 1;
+    pointer-events: auto;
+}
 
 
     nav .start {
