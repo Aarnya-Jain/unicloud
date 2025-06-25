@@ -7,21 +7,41 @@
     <title>Unicloud-Home</title>
     <link rel="stylesheet" href="style_main.css">
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hamburger = document.querySelector('.hamburger');
+        const nav = document.querySelector('.details nav');
 
+        hamburger.addEventListener('click', function () {
+            nav.classList.toggle('active');
+        });
+
+        const navItems = nav.querySelectorAll('a, button');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    });
+</script>
 <body>
 
     <div class="head">
         <header>
-        <div class="info">
-            <img src="public/icon.svg" alt="icon.svg" class="icon">
-            <div class="name">Unicloud</div>
-        </div>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#">Connect</a>
-            <button class="start" onclick="location.href='login.html'">Get Started</button>
-        </nav>
-    </header>
+            <div class="info">
+                <img src="../public/icon.svg" alt="icon.svg" class="icon">
+                <div class="name">Unicloud</div>
+            </div>
+            <div class="details">
+                <nav>
+                    <a href="index.html">Home</a>
+                    <a href="#">Contact</a>
+                    <button class="start" onclick="location.href='login.html'">Logout</button>
+                </nav>
+                <button class="hamburger">☰</button>
+            </div>
+            
+        </header>
     </div>
     
     <main>
