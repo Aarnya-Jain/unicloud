@@ -1,0 +1,353 @@
+    /* Basic Resets and Body Styling */
+    
+
+    /* Main container for content */
+    .container {
+        background-color: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+    }
+
+    h1 {
+      color: #1a73e8; /* Google's blue */
+      margin-bottom: 25px;
+    }
+
+    /* Account Management Section */
+    #google-drive .account-section {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #dadce0;
+    }
+
+    #google-drive .account-section .current-user {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    #google-drive .account-section .current-user.active {
+      display: flex;
+    }
+
+    #google-drive .account-section .current-user.user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    #google-drive .account-section .current-user.user-info {
+      text-align: left;
+    }
+
+    #google-drive .account-section .current-user  .user-name {
+      font-weight: 500;
+      color: #202124;
+    }
+
+    #google-drive .account-section .current-user .user-email {
+      font-size: 12px;
+      color: #5f6368;
+    }
+
+    #google-drive .accounts-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 15px 0;
+      display: none;
+    }
+
+    #google-drive .accounts-list.active {
+      display: flex;
+    }
+
+    #google-drive .account-item {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border: 1px solid #dadce0;
+      border-radius: 20px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    #google-drive .account-item:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    #google-drive .account-item.current {
+      border-color: #1a73e8;
+      background-color: #e8f0fe;
+    }
+
+    #google-drive .account-item .user-avatar {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    #google-drive .account-item .remove-account {
+      margin-left: 8px;
+      color: #d93025;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 2px;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #google-drive .account-item .remove-account:hover {
+      background-color: #fce8e6;
+    }
+
+    /* Button Styling */
+    #google-drive button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      background-color: #1558b3;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    #add_account_button {
+      background-color: #34a853; /* Google's green */
+    }
+
+    #add_account_button:hover {
+      background-color: #2d8e47;
+    }
+
+    #signout_all_button {
+      background-color: #d93025; /* Google's red */
+    }
+
+    #signout_all_button:hover {
+      background-color: #a52714;
+    }
+
+    #upload_button {
+      background-color: #34a853; /* Google's green */
+    }
+
+    #upload_button:hover {
+      background-color: #2d8e47;
+    }
+
+    /* Upload Section Styling */
+    .upload-section {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border: 2px dashed #dadce0;
+      display: none;
+    }
+
+    .upload-section.active {
+      display: block;
+    }
+
+    .file-input-wrapper {
+      margin: 15px 0;
+    }
+
+    #file_picker {
+      padding: 8px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      background-color: white;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .upload-status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .upload-status.success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      display: block;
+    }
+
+    .upload-status.error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      display: block;
+    }
+
+    .upload-status.loading {
+      background-color: #d1ecf1;
+      border: 1px solid #bee5eb;
+      color: #0c5460;
+      display: block;
+    }
+
+    /* Data Section */
+    .data-section {
+      display: none;
+    }
+
+    .data-section.active {
+      display: block;
+    }
+
+    /* File List Styling */
+    #file_list {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    /* Common style for all list items */
+    #file_list li {
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Specific padding for file items with links */
+    #file_list li.file-item {
+        padding: 0; /* Padding will be on the anchor tag */
+    }
+
+    #file_list li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Style for folder items */
+    #file_list li.folder-item {
+        padding: 10px 20px;
+        background-color: #f0f4f8; /* Slightly different background for folders */
+    }
+
+    #file_list li a {
+      text-decoration: none;
+      color: #202124;
+      font-weight: 500;
+      display: flex; /* Use flexbox for alignment */
+      align-items: center;
+      padding: 15px 20px; /* Moved padding here */
+    }
+
+    #file_list li a:hover {
+      color: #1a73e8;
+    }
+
+    /* New styles for folder hierarchy */
+    .file-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .folder-header {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .caret {
+        margin-right: 8px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .folder-item.expanded > .folder-header .caret {
+        transform: rotate(90deg);
+    }
+
+    .nested {
+        display: none; /* Hidden by default */
+        list-style-type: none;
+        padding-left: 25px; /* Indent nested items */
+        margin-top: 10px;
+    }
+
+    .folder-item.expanded > .nested {
+        display: block; /* Show when expanded */
+    }
+
+    .empty-folder {
+        color: #888;
+        font-style: italic;
+        padding: 5px 0 !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .empty-folder:hover {
+        transform: none !important;
+    }
+
+    .no-accounts {
+      text-align: center;
+      color: #5f6368;
+      margin: 20px 0;
+    }
+
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      max-width: 300px;
+    }
+    .notification.error {
+      background-color: #d93025;
+    }
+    .notification.success {
+      background-color: #34a853;
+    }
+    .notification.info {
+      background-color: #1a73e8;
+    }
