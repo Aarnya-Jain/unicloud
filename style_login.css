@@ -1,41 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
+
 body {
     font-family: "Quicksand", sans-serif;
-    background-color: #e9f6fa; 
+    background-color: #e9f6fa;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     color: rgb(4, 77, 77);
-    padding: 20px; 
+    padding: 20px;
     box-sizing: border-box;
-}
-
-.header-data {
-    width: 100%;
-    max-width: 1000px; 
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.back-home-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.back-home-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+    overflow-y: auto;
 }
 
 .container-data {
@@ -51,7 +28,7 @@ body {
     justify-content: center;
 }
 
-.auth-section, .add-account-section {
+.auth-section-login {
     flex: 1;
     min-width: 320px;
     padding: 30px;
@@ -60,6 +37,18 @@ body {
     background-color: #fcfdfe;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+
+.auth-section-signup {
+    flex: 1;
+    min-width: 320px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #fcfdfe;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+
 
 h2 {
     color: #0056b3;
