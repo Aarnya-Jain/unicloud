@@ -119,7 +119,25 @@
           return;
         }
 
-        // Store account data
+        // Prepare data for Supabase
+        const googleAuthData = {
+          id: accountId,
+          name: userInfo.name,
+          email: userInfo.email,
+          picture: userInfo.picture,
+          access_token: resp.access_token
+        };
+
+        // Save to Supabase first
+        if (window.connectAndSaveGoogleAccount) {
+          const success = await window.connectAndSaveGoogleAccount(googleAuthData);
+          if (!success) {
+            showGoogleNotification('Failed to save account to database', 'error');
+            return;
+          }
+        }
+
+        // Store account data locally for immediate use
         accounts[accountId] = {
           id: accountId,
           name: userInfo.name,
@@ -267,6 +285,11 @@
         }
 
         const accountName = accounts[accountId].name;
+
+        // Remove from Supabase if function exists
+        if (window.removeAccountFromSupabase) {
+          window.removeAccountFromSupabase('google', accountId);
+        }
 
         // Remove from accounts
         delete accounts[accountId];
@@ -520,3 +543,11 @@
     gapiLoaded();
     gisLoaded();
   };
+
+  // Make functions globally available
+  window.accounts = accounts;
+  window.currentAccountId = currentAccountId;
+  window.addAccountButton = addAccountButton;
+  window.updateUI = updateUI;
+  window.switchGoogleAccount = switchGoogleAccount;
+  window.removeGoogleAccount = removeGoogleAccount;

@@ -28,7 +28,7 @@
         <nav>
           <a href="index.html">Home</a>
           <a href="#">Connect</a>
-          <button class="start" onclick="location.href='login.html'">Logout</button>
+          <button class="start" id="logout-button" >Logout</button>
         </nav>
         <button class="hamburger">☰</button>
       </div>
@@ -191,21 +191,69 @@
         nav.classList.remove('active');
       });
     });
+
+    // Add event listeners for main account buttons
+    const addGoogleBtn = document.getElementById('add-google-account-btn');
+    const addDropboxBtn = document.getElementById('add-dropbox-account-btn');
+
+    if (addGoogleBtn) {
+      addGoogleBtn.addEventListener('click', function() {
+        // Trigger Google OAuth flow
+        if (window.addAccountButton && window.addAccountButton.onclick) {
+          window.addAccountButton.onclick();
+        } else {
+          // Fallback: switch to Google Drive tab
+          const googleTab = document.querySelector('[onclick*="google-drive"]');
+          if (googleTab) {
+            googleTab.click();
+            // Wait a bit then trigger the add account button
+            setTimeout(() => {
+              const googleAddBtn = document.getElementById('add_account_button');
+              if (googleAddBtn) {
+                googleAddBtn.click();
+              }
+            }, 100);
+          }
+        }
+      });
+    }
+
+    if (addDropboxBtn) {
+      addDropboxBtn.addEventListener('click', function() {
+        // Trigger Dropbox OAuth flow
+        if (window.addAccountBtn && window.addAccountBtn.onclick) {
+          window.addAccountBtn.onclick();
+        } else {
+          // Fallback: switch to Dropbox tab
+          const dropboxTab = document.querySelector('[onclick*="dropbox"]');
+          if (dropboxTab) {
+            dropboxTab.click();
+            // Wait a bit then trigger the add account button
+            setTimeout(() => {
+              const dropboxAddBtn = document.getElementById('dropbox-add-account-btn');
+              if (dropboxAddBtn) {
+                dropboxAddBtn.click();
+              }
+            }, 100);
+          }
+        }
+      });
+    }
   });
 
-  // function openBrowser(evt, browserName) {
-  //     var i, tabcontent, tablinks;
-  //     tabcontent = document.getElementsByClassName("tab-content");
-  //     for (i = 0; i < tabcontent.length; i++) {
-  //         tabcontent[i].style.display = "none";
-  //     }
-  //     tablinks = document.getElementsByClassName("tab-link");
-  //     for (i = 0; i < tablinks.length; i++) {
-  //         tablinks[i].className = tablinks[i].className.replace(" active", "");
-  //     }
-  //     document.getElementById(browserName).style.display = "block";
-  //     evt.currentTarget.className += " active";
-  // }
+  function openBrowser(evt, browserName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tab-link");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(browserName).style.display = "block";
+      evt.currentTarget.className += " active";
+  }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
