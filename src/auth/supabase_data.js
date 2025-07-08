@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+window.supabase = supabase;
 
 
 // --- 2. Page Protection and User Handling ---
@@ -24,26 +25,38 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 // Initial check to see if a user is already logged in
 (async () => {
-    // If returning from Dropbox OAuth (access_token in URL hash), wait for Dropbox handler, then re-check session
-    if (window.location.hash.includes('access_token')) {
-        setTimeout(async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                currentUser = session.user;
-                console.log('Session found after Dropbox OAuth. Welcome, user:', currentUser.email);
-                loadConnectedAccounts();
-            } else {
-                alert('You must be logged in to view this page.');
-                window.location.href = 'login.html';
-            }
-        }, 1000); // Wait 1 second for Dropbox handler to finish
-        return;
-    }
-
+    // --- Dropbox OAuth Handling ---
+    const isDropboxOAuth = window.location.hash.includes('access_token');
+    const hasPendingDropbox = !!localStorage.getItem('pending_dropbox_access_token');
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    if (!session && !isDropboxOAuth && !hasPendingDropbox) {
         alert('You must be logged in to view this page.');
         window.location.href = 'login.html';
+        return;
+    }
+    // If returning from Dropbox OAuth (access_token in URL hash), wait for Dropbox handler, then re-check session
+    if (isDropboxOAuth) {
+        // Try to restore session and handle Dropbox before redirect
+        if (!session) {
+            // No session, prompt user to log in
+            alert('You must be logged in to connect your Dropbox account. Please log in again.');
+            window.location.href = 'login.html';
+            return;
+        } else {
+            currentUser = session.user;
+            // Optionally, you could call a Dropbox handler here if needed
+            // e.g., handleDropboxOAuth();
+            console.log('Session found after Dropbox OAuth. Welcome, user:', currentUser.email);
+            loadConnectedAccounts();
+            // Remove the access_token from the URL hash to clean up
+            window.location.hash = '';
+            return;
+        }
+    }
+    // --- Normal session check ---
+    if (!session) {
+        // Already handled above
+        return;
     } else {
         currentUser = session.user;
         console.log('Session found. Welcome, user:', currentUser.email);
@@ -92,7 +105,6 @@ async function loadConnectedAccounts() {
         
         // Separate accounts by provider
         const googleAccounts = {};
-        const dropboxAccounts = {};
         
         data.forEach(account => {
             if (account.provider === 'google') {
@@ -104,14 +116,6 @@ async function loadConnectedAccounts() {
                     token: account.access_token,
                     addedAt: account.created_at
                 };
-            } else if (account.provider === 'dropbox') {
-                dropboxAccounts[account.provider_account_id] = {
-                    id: account.provider_account_id,
-                    name: account.account_name,
-                    email: account.account_email,
-                    accessToken: account.access_token,
-                    addedAt: account.created_at
-                };
             }
         });
 
@@ -119,11 +123,6 @@ async function loadConnectedAccounts() {
         if (window.accounts) {
             window.accounts = googleAccounts;
             localStorage.setItem('google_drive_accounts', JSON.stringify(googleAccounts));
-        }
-        
-        if (window.aaccounts) {
-            window.aaccounts = dropboxAccounts;
-            localStorage.setItem('dropbox_accounts', JSON.stringify(dropboxAccounts));
         }
 
         // Update UI if the functions exist
@@ -186,11 +185,14 @@ function displayAllAccounts(accounts) {
  * @param {object} googleAuthData - The user and token data you get from Google's successful sign-in.
  */
 async function connectAndSaveGoogleAccount(googleAuthData) {
-    // --- Pre-check: Ensure a Supabase user is logged in ---
-    if (!currentUser) {
-        alert("Authentication error: Please log in again to connect an account.");
+    // --- Pre-check: Ensure a Supabase user is logged in and session is valid ---
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (!session || sessionError) {
+        alert("Your session has expired. Please log in again to connect a Google account.");
+        window.location.href = 'login.html';
         return;
     }
+    currentUser = session.user;
 
     console.log("Starting to save Google Account for Supabase user:", currentUser.id);
 
@@ -221,51 +223,6 @@ async function connectAndSaveGoogleAccount(googleAuthData) {
     } else {
         console.log('Google account saved successfully!', data);
         alert('Google Drive account has been successfully connected!');
-        
-        // Refresh the accounts list
-        await loadConnectedAccounts();
-        return true;
-    }
-}
-
-/**
- * Handles the process of connecting a new Dropbox account and saving it to Supabase.
- * This function should be called when the user clicks the "Add Dropbox" button.
- *
- * @param {object} dropboxAuthData - The user and token data you get from Dropbox's successful sign-in.
- */
-async function connectAndSaveDropboxAccount(dropboxAuthData) {
-    // --- Pre-check: Ensure a Supabase user is logged in ---
-    if (!currentUser) {
-        alert("Authentication error: Please log in again to connect an account.");
-        return;
-    }
-
-    console.log("Starting to save Dropbox Account for Supabase user:", currentUser.id);
-
-    // --- 1. Prepare the data object for Supabase ---
-    const newCloudAccount = {
-        user_id: currentUser.id,             // Links this entry to the logged-in Supabase user
-        provider: 'dropbox',
-        provider_account_id: dropboxAuthData.id,          // The unique ID for the user FROM DROPBOX
-        account_name: dropboxAuthData.name,         // The user's name FROM DROPBOX
-        account_email: dropboxAuthData.email,       // The user's email FROM DROPBOX
-        access_token: dropboxAuthData.access_token, // The access token FROM DROPBOX
-    };
-
-    // --- 2. Insert the new row into the 'connected_accounts' table ---
-    const { data, error } = await supabase
-        .from('connected_accounts')
-        .insert([newCloudAccount]);
-
-    // --- 3. Handle the result ---
-    if (error) {
-        console.error('Error saving account to Supabase:', error);
-        alert('Failed to connect Dropbox account: ' + error.message);
-        return false;
-    } else {
-        console.log('Dropbox account saved successfully!', data);
-        alert('Dropbox account has been successfully connected!');
         
         // Refresh the accounts list
         await loadConnectedAccounts();
@@ -325,23 +282,11 @@ function manageAccount(provider, providerAccountId) {
         if (window.switchGoogleAccount) {
             window.switchGoogleAccount(providerAccountId);
         }
-    } else if (provider === 'dropbox') {
-        // Switch to Dropbox tab
-        const dropboxTab = document.querySelector('[onclick*="dropbox"]');
-        if (dropboxTab) {
-            dropboxTab.click();
-        }
-        
-        // Switch to the specific account if the function exists
-        if (window.switchDropboxAccount) {
-            window.switchDropboxAccount(providerAccountId);
-        }
     }
 }
 
 // --- 5. Make functions globally available ---
 window.connectAndSaveGoogleAccount = connectAndSaveGoogleAccount;
-window.connectAndSaveDropboxAccount = connectAndSaveDropboxAccount;
 window.removeAccountFromSupabase = removeAccountFromSupabase;
 window.manageAccount = manageAccount;
 window.loadConnectedAccounts = loadConnectedAccounts;

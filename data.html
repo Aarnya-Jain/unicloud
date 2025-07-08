@@ -8,16 +8,13 @@
   <link rel="stylesheet" href="style_main.css">
   <link rel="stylesheet" href="style_data.css">
   <link rel="stylesheet" href="./src/google/google-drive.css">
-  <link rel="stylesheet" href="./src/dropbox/dropbox.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://apis.google.com/js/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 
 </head>
 
 <body>
-
   <div class="head">
     <header>
       <div class="info">
@@ -50,13 +47,11 @@
         <div class="account-grid" id="all-accounts-list">
         </div>
         <button class="btn-primary" id="add-google-account-btn">+ Add Google Drive</button>
-        <button class="btn-primary" id="add-dropbox-account-btn">+ Add Dropbox</button>
       </section>
 
       <div class="file-browser-container">
         <div class="tabs">
           <button class="tab-link active" onclick="openBrowser(event, 'google-drive')">Google Drive</button>
-          <button class="tab-link" onclick="openBrowser(event, 'dropbox')">Dropbox</button>
         </div>
 
         <div id="google-drive" class="tab-content" style="display:block;">
@@ -96,53 +91,6 @@
               </div>
 
               <ul id="file_list"></ul>
-            </div>
-          </div>
-
-          <div id="dropbox" class="tab-content">
-            <div class="container">
-              <h1>Dropbox</h1>
-
-              <!-- Account Management Section -->
-              <div class="accounts-section">
-                <div class="accounts-header">
-                  <h2>Connected Accounts</h2>
-                  <button id="dropbox-add-account-btn">+ Add Account</button>
-                </div>
-                <div id="dropbox-accounts-list">
-                  <div class="no-accounts">
-                    <p>No accounts connected. Click "Add Account" to get started.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- File Browser Section -->
-              <div id="file-browser" class="file-browser">
-                <div class="browser-header">
-                  <div class="current-account">
-                    <span id="current-account-name">Select an account</span>
-                  </div>
-                  <div class="upload-section">
-                    <input type="file" id="dropbox-file-input" multiple>
-                    <button id="dropbox-upload-btn">📁 Choose Files</button>
-                  </div>
-                </div>
-
-                <div class="upload-area" id="upload-area">
-                  <p>Drag and drop files here or click "Choose Files" to upload</p>
-                </div>
-
-                <div id="upload-progress" class="upload-progress">
-                  <div>Uploading: <span id="upload-filename"></span></div>
-                  <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                  </div>
-                  <div><span id="upload-percent">0%</span></div>
-                </div>
-
-                <div id="current-path"></div>
-                <ul id="dropbox-file-list"></ul>
-              </div>
             </div>
           </div>
         </div>
@@ -194,7 +142,6 @@
 
     // Add event listeners for main account buttons
     const addGoogleBtn = document.getElementById('add-google-account-btn');
-    const addDropboxBtn = document.getElementById('add-dropbox-account-btn');
 
     if (addGoogleBtn) {
       addGoogleBtn.addEventListener('click', function() {
@@ -211,28 +158,6 @@
               const googleAddBtn = document.getElementById('add_account_button');
               if (googleAddBtn) {
                 googleAddBtn.click();
-              }
-            }, 100);
-          }
-        }
-      });
-    }
-
-    if (addDropboxBtn) {
-      addDropboxBtn.addEventListener('click', function() {
-        // Trigger Dropbox OAuth flow
-        if (window.addAccountBtn && window.addAccountBtn.onclick) {
-          window.addAccountBtn.onclick();
-        } else {
-          // Fallback: switch to Dropbox tab
-          const dropboxTab = document.querySelector('[onclick*="dropbox"]');
-          if (dropboxTab) {
-            dropboxTab.click();
-            // Wait a bit then trigger the add account button
-            setTimeout(() => {
-              const dropboxAddBtn = document.getElementById('dropbox-add-account-btn');
-              if (dropboxAddBtn) {
-                dropboxAddBtn.click();
               }
             }, 100);
           }
@@ -259,6 +184,5 @@
 
 <script  type="module" src="./src/auth/supabase_data.js"></script>
 <script src="./src/google/google.js"></script>
-<script  src="./src/dropbox/drop.js"></script>
 
 </html>

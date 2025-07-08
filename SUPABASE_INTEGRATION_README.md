@@ -1,10 +1,10 @@
 # Supabase Integration for Cloud Account Management
 
-This document explains how the Google Drive and Dropbox integrations now work with Supabase to provide individual user account management.
+This document explains how the Google Drive integration now works with Supabase to provide individual user account management.
 
 ## Overview
 
-The application now stores all connected cloud accounts (Google Drive and Dropbox) in a Supabase database table called `connected_accounts`. This ensures that:
+The application now stores all connected cloud accounts (Google Drive) in a Supabase database table called `connected_accounts`. This ensures that:
 
 1. **Each user has their own individual accounts** - No mixing of accounts between users
 2. **Accounts persist across sessions** - Accounts are loaded when users log in
@@ -77,13 +77,6 @@ Run the verification script `verify_table_structure.sql` in your Supabase SQL ed
 4. Account data is saved to Supabase `connected_accounts` table
 5. Account is also stored locally for immediate use
 
-#### Dropbox:
-1. User clicks "Add Dropbox" button
-2. Dropbox OAuth flow is initiated
-3. After successful authentication, `connectAndSaveDropboxAccount()` is called
-4. Account data is saved to Supabase `connected_accounts` table
-5. Account is also stored locally for immediate use
-
 ### 3. Account Loading
 - When a user logs in, `loadConnectedAccounts()` is called
 - This fetches all connected accounts for the current user from Supabase
@@ -102,7 +95,6 @@ Run the verification script `verify_table_structure.sql` in your Supabase SQL ed
 
 - `loadConnectedAccounts()` - Loads all accounts for the current user
 - `connectAndSaveGoogleAccount(googleAuthData)` - Saves Google account to Supabase
-- `connectAndSaveDropboxAccount(dropboxAuthData)` - Saves Dropbox account to Supabase
 - `removeAccountFromSupabase(provider, providerAccountId)` - Removes account from Supabase
 - `displayAllAccounts(accounts)` - Displays accounts in the main UI
 - `manageAccount(provider, providerAccountId)` - Switches to manage specific account
@@ -112,11 +104,6 @@ Run the verification script `verify_table_structure.sql` in your Supabase SQL ed
 #### Google Drive (`google.js`):
 - Modified `addAccountButton.onclick` to call `connectAndSaveGoogleAccount()`
 - Modified `removeGoogleAccount()` to call `removeAccountFromSupabase()`
-- Accounts are loaded from Supabase on initialization
-
-#### Dropbox (`drop.js`):
-- Modified `handleOAuthReturn()` to call `connectAndSaveDropboxAccount()`
-- Modified `removeDropboxAccount()` to call `removeAccountFromSupabase()`
 - Accounts are loaded from Supabase on initialization
 
 ## Security Features
